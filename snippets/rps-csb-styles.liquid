@@ -1,0 +1,71 @@
+<style id="rps-csb-styles">
+  .rps-csb-container * {
+    outline: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .rps-csb-container {
+    padding: 10px !important;
+    max-width: max-content !important;
+    visibility: hidden !important;
+  }
+  
+  .rps-csb-form-container {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    background-color: white;
+    height: inherit;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    width: inherit;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #B0B0B0;
+    border-radius: 5px;
+    margin: 0 !important;
+  }
+  
+  .rps-csb-form-container:focus-within {
+    border-color: #222222 !important;
+  }
+  
+  .rps-csb-input {
+    display: block;
+    width: 100%;
+    padding: 0 55px 0 15px;
+    border: none;
+    background-color: transparent !important;
+    height: 0 !important;
+  }
+  
+  .rps-csb-search-button {
+    border-radius: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    border: none;
+    display: flex;
+    padding: 0 15px;
+  }
+  
+  .rps-csb-container .rps-csb-search-icon {
+    margin: auto;
+    height: 17px;
+    width: 17px;
+  }
+  
+  @media all and (max-width: 768px) {
+    .rps-csb-container, .rps-csb-form-container {
+      width: 100% !important;
+      max-width: initial !important;
+    }
+  }
+  
+  a[data-action="open-modal"], a[href="/search"], a[data-search], a[title="Search"], form[action="/search"]:not(.rps-csb-form-container):not(.rps_search_overlay_form), input[name="q"]:not(.rps-csb-input):not(.rps_search_overlay_input), button[type="button"].js-drawer-open-top, a[href="/search"], a.show-search-link, .header-search-toggle, li.search, a.searchIco, a.searchIcon, button.js-drawer-open-top, .header__search {
+    display: none !important;
+  }
+  
+  
+</style>

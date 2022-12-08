@@ -1,0 +1,190 @@
+{% if content_for_header contains 'rapid-search-static-abffarbufmhgche6.z01.azurefd.net' %}
+
+{% render 'rps-csb-styles' %}
+
+<script>
+  try {
+   (() => {
+      {% if content_for_header contains 'adminBarInjector' or content_for_header contains 'previewBarInjector'  %}
+         const isAdmin = true
+      {% else %}
+         const isAdmin = false
+      {% endif %}
+      
+      const settings = {"status":"admin_only","position":"right","icon_color":"#6F6F6F","button_background_color":"#D6D6D6","width":250,"height":37,"target_selector":".header-wrapper","placeholder":"Search","id":"rps-1a932d26-0e4c-4dca-a115-7944b807476e","css":"","show_on_mobile":true,"show_on_desktop":true}
+      const mobileThreshold = settings.mobile_threshold || 768;
+      const desktopThreshold = settings.desktop_threshold || (mobileThreshold + 1)
+      const isMobile = window.innerWidth <= mobileThreshold;
+      const isDesktop = window.innerWidth >= desktopThreshold;
+      const showOnMobile = settings.show_on_mobile;
+      const showOnDesktop = settings.show_on_desktop;
+      const statusIsDisabled = settings.status === 'disabled' || (isMobile && !showOnMobile) || (isDesktop && !showOnDesktop);
+      const statusIsAdminOnly = settings.status === 'admin_only';
+      const mobileSelector =  showOnMobile ? (settings.mobile_selector || "#shopify-section-header") : ''
+      const targetSelector =  isMobile ? mobileSelector : settings.target_selector
+      const searchBarPosition = isMobile ? (settings.mobile_position || 'below') : settings.position
+      
+      if (statusIsDisabled) {
+        document.getElementById('rps-csb-styles')?.remove();
+      }
+      
+      if (!targetSelector || statusIsDisabled || (statusIsAdminOnly && !isAdmin) || window.name === 'csb_preview') return;
+      
+      const createCustomSearchBar = (settings) => {
+        const container = document.createElement('div');
+        const searchBarId = settings.id || '';
+        const searchBarWidth = settings.width || 200;
+        const searchButtonBackgroundColor = settings.button_background_color || '#d6d6d6';
+        const searchIconColor = settings.icon_color || '#6f6f6f';
+        const searchPlaceholder = settings.placeholder || 'Search'
+        const searchBarHeight = settings.height || 37;
+      
+        container.innerHTML = `<div id="${searchBarId}" class="rps-csb-container">
+          <form autocomplete="off" style="width: ${searchBarWidth}px" class="rps-csb-form-container" action="{{ routes.search_url }}" method="get" role="search">
+            <input style="height: ${searchBarHeight}px" value="{{ search.terms | escape }}" placeholder="${searchPlaceholder}" name="q" class="rps-csb-input" />
+            <button style="background-color: ${searchButtonBackgroundColor}" type="submit" class="rps-csb-search-button">
+              <svg style="fill: ${searchIconColor}" class="rps-csb-search-icon" viewBox="0 0 24 24">
+                <path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73
+                4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792
+                 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/>
+              </svg>
+            </button>
+          </form>
+        </div>`;
+      
+        return container.firstChild;
+      };
+      
+      const isInViewport = (element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.bottom > 1;
+      }
+      
+      const getTargetElementPosition = targetElement => {
+        try {
+          let position = window.getComputedStyle(targetElement).position;
+  
+          while (targetElement.tagName !== 'BODY' && position !== 'fixed' && position !== 'sticky') {
+            targetElement = targetElement.parentElement;
+  
+            const parentElementStyle = window.getComputedStyle(targetElement);
+            position = parentElementStyle.position;
+          }
+  
+          const isFixed = position === 'fixed' || position === 'sticky';
+  
+          return isFixed ? 'fixed' : 'absolute';
+        } catch (e) {
+          return 'absolute';
+        }
+      };
+        
+      const getTargetElementZIndex = targetElement => {
+        try {
+          const zIndices = [window.getComputedStyle(targetElement).zIndex];
+  
+          while (targetElement.tagName !== 'BODY') {
+            targetElement = targetElement.parentElement;
+  
+            const parentElementStyle = window.getComputedStyle(targetElement);
+            zIndices.push(parentElementStyle.zIndex)
+          }
+  
+          zIndices.pop()
+  
+          const filteredIndices = zIndices.map(value => parseInt(value, 10)).filter(value => !isNaN(value))
+  
+          return Math.max(Math.max(...filteredIndices), 0) + (isMobile ? 0 : 1);
+        } catch (e) {
+          console.log(e)
+          return 0;
+        }
+      };
+      
+      const setPosition = (targetElement, searchBar) => {
+        requestAnimationFrame(() => {
+          const targetElementRect = targetElement.getBoundingClientRect();
+          const targetElementVisible = isInViewport(targetElement);
+          
+          if (!targetElementVisible) {
+            searchBar.style.setProperty("visibility", "hidden", "important")
+            return;
+          }
+                    
+          const zIndex = getTargetElementZIndex(document.querySelector(targetSelector))
+          const targetElementPosition = getTargetElementPosition(targetElement);
+          const searchBarRect = searchBar.getBoundingClientRect();
+          const documentRect = document.documentElement.getBoundingClientRect()
+          const isFixed = targetElementPosition === 'fixed'
+          const scrolledPastDocument = documentRect.top > 0
+          const documentTop = isFixed || scrolledPastDocument ? 0 : Math.abs(documentRect.top)
+    
+          switch (searchBarPosition) {
+            case "left": {
+              searchBar.style.top = documentTop + targetElementRect.top + targetElementRect.height / 2 - searchBarRect.height / 2 + 'px';
+              searchBar.style.left = targetElementRect.left - searchBarRect.width + "px";
+              targetElement.style.marginLeft = searchBarRect.width + 'px'
+              break;
+            }
+            
+            case 'right': {
+              targetElement.style.marginRight = searchBarRect.width + 'px';
+              searchBar.style.top = documentTop + targetElementRect.top + targetElementRect.height / 2 - searchBarRect.height / 2 + 'px';
+              searchBar.style.left = targetElementRect.right + "px";
+              break;
+            }
+            
+            case "below": {
+              searchBar.style.top = targetElementRect.bottom - (isFixed ? 0 : documentRect.top) + 'px';
+              targetElement.style.marginBottom = searchBarRect.height + 'px'
+              searchBar.style.left = targetElementRect.left - searchBarRect.width / 2 + targetElementRect.width / 2 + 'px';
+              break;
+            }
+            
+            case 'above': {
+              targetElement.style.marginTop = searchBarRect.height + 'px'
+              searchBar.style.top = targetElementRect.top - searchBarRect.height - (isFixed ? 0 : documentRect.top) + 'px';
+              searchBar.style.left = targetElementRect.left - searchBarRect.width / 2 + targetElementRect.width / 2 + 'px';
+              break;
+            }
+          }
+    
+          searchBar.style.setProperty("visibility", "visible", "important")
+          searchBar.style.setProperty("position", targetElementPosition, "important")
+          searchBar.style.setProperty("z-index", zIndex, "important")
+          searchBar.querySelector('input').style.setProperty("height", settings.height + 'px', "important")
+
+          if (parseInt(searchBar.style.left) < 0) {
+            searchBar.style.left = '0px'
+          }
+        })
+      }
+      
+      const targetElement = isMobile ? Array.from(document.querySelectorAll(targetSelector)).pop() : document.querySelector(targetSelector);
+      const searchBar = createCustomSearchBar(settings);
+      
+      document.body.appendChild(searchBar);
+      
+      const documentObserver = new MutationObserver(() => {
+        setPosition(targetElement, searchBar)
+      });
+
+      documentObserver.observe(document.documentElement, {
+        attributes: true,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: true,
+        characterDataOldValue: true,
+      });
+      
+      document.onscroll = () => {
+        setPosition(targetElement, searchBar);
+      }
+    })();
+  } catch (e) {
+    console.log(e);
+  }
+</script>
+
+{% endif %}
