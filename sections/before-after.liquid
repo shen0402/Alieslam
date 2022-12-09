@@ -1,0 +1,169 @@
+{%- render 'section-style' -%}
+<style>
+    #section--{{ section.id }} {
+        background-color: {{ section.settings.back_color | color_modify: 'alpha', 0.1 }};
+    }
+</style>
+<div id="section--{{ section.id }}" class="before-after">
+    <div class="custom-section">
+        {%- if section.settings.subtitle != blank -%}
+            <div class="section-subtitle">
+                <p class="text-center">{{ section.settings.subtitle }}</p>
+            </div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+            <div class="section-title">
+                <h2 class="text-center">{{ section.settings.title }}</h2>
+            </div>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+            <div class="section-text">
+                <p class="text-center">{{ section.settings.text }}</p>
+            </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+            <div class="before-after-slider">
+                {%- for block in section.blocks -%}
+                    <div class="before-after--item {% if block.settings.layout2 %}layout-2{% endif %}">
+                        <div class="before-after--columns">
+                            <div class="before-after--column">
+                                <span class="before-after--caption">before</span>
+                                <div class="before-after--image">
+                                    {% render 'lazy-img' image: block.settings.before_image, image_class: '' %}
+                                </div>
+                            </div>
+                            <div class="before-after--column">
+                                <span class="before-after--caption">AFTER</span>
+                                <div class="before-after--image">
+                                    {% render 'lazy-img' image: block.settings.after_image, image_class: '' %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="before-after--text">
+                            <p>{{ block.settings.text }}</p>
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+        {%- endif -%}
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Before & After",
+        "settings": [
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "Subtitle",
+                "default": "REAL BABES. REAL RESULTS."
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "BEFORE & AFTERS"
+            },
+            {
+                "type": "richtext",
+                "id": "text",
+                "label": "Text",
+                "default": "<p>Use your big beautiful eyes to see the real results these babes had with the selfie line. Don't forget to send us your before & afters. 😍 </p>"
+            },
+            {
+                "type": "header",
+                "content": "Color"
+            },
+            {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text color",
+                "default": "#38393e"
+            },
+            {
+                "type": "color",
+                "id": "back_color",
+                "label": "Background color",
+                "default": "#ffffff"
+            },
+            {
+                "type": "header",
+                "content": "Padding"
+            },
+            {
+                "type": "range",
+                "id": "padding_top",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Padding top",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Padding bottom",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "padding_top_m",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Moble padding top",
+                "default": 50
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom_m",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Moble bottom top",
+                "default": 50
+            }
+        ],
+        "blocks": [
+            {
+                "type": "before_and_after",
+                "name": "Before and after",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "before_image",
+                        "label": "Before image"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "after_image",
+                        "label": "After image"
+                    },
+                    {
+                        "type": "text",
+                        "id": "text",
+                        "label": "Text"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "layout2",
+                        "label": "Layout2",
+                        "default": false
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Before & After"
+            }
+        ]
+    }
+{% endschema %}

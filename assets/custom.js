@@ -76,4 +76,22 @@ function postMessageToPlayer(player, command){
     $('.play-video').click(function(){
         playPauseVideo($(this), "play");
     });
+
+    $('.before-after-slider').slick({
+      dots: true,
+      infinite: true,
+      speed: 300,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: false,
+      responsive: [
+        {
+          breakpoint: 749,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
 });

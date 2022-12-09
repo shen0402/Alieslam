@@ -155,13 +155,11 @@ sticky-header {
 }
 
 .section-text {
-    margin-top: 50px;
-}
-
-.section-text {
-    margin: 0;
     font-size: 16px;
     text-align: center;
+    max-width: 521px;
+    margin: auto;
+    margin-top: 50px;
 }
 
 .iwt--1 .section-title {
@@ -526,5 +524,111 @@ sticky-header {
     .iwt-item--2 {
         width: 50%;
         margin: 0;
+    }
+}
+
+.before-after-slider {
+    margin-top: 48px;
+}
+
+.before-after--columns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 35px;
+}
+
+.before-after--column {
+    width: calc(50% - 15px);
+    text-align: center;
+}
+
+.before-after--column:last-of-type {
+    margin-left: auto;
+}
+
+.before-after--item * {
+    font-size: 14px;
+    color: #936ed4 !important;
+    font-weight: bold;
+    text-align: center;
+}
+
+.before-after--item {
+    background-color: rgba(147, 110, 212, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 49px 30px 34px;
+    margin: 15px;
+}
+
+.before-after--image img {
+    width: 100%;
+    height: auto;
+}
+
+.before-after--text p {
+    margin: 0;
+}
+
+.layout-2.before-after--item {
+    background-color: #936ed4;
+}
+
+.layout-2.before-after--item * {
+    color: #ffffff !important;
+}
+
+.slick-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 64px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.slick-dots li {
+    padding: 10px;
+    display: flex;
+}
+
+.slick-dots li button {
+    color: transparent !important;
+    background: transparent;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #f48ba9;
+    font-size: 8px;
+    padding: 0;
+    border-radius: 100px;
+}
+
+.slick-dots li.slick-active button {
+    background-color: #f48ba9;
+}
+
+@media (max-width: 749px) {
+    .before-after .custom-section {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    .before-after .section-subtitle p, .before-after .section-title h2, .before-after .section-text p {
+        text-align: left;
+    }
+
+    .before-after .section-text {
+        margin-top: 40px;
+    }
+
+    .before-after-slider {
+        margin-top: 30px;
+        width: calc(100% + 20px);
+        margin-left: -10px;
+    }
+
+    .slick-dots {
+        margin-top: 23px;
     }
 }
