@@ -1,0 +1,156 @@
+{%- render 'section-style' -%}
+<div id="section--{{ section.id }}" class="image-with-icons">
+    <div class="custom-section">
+        <div class="image-with-icons--columns">
+            <div class="image-with-icons--column">
+                <div class="image-with-icons--text">
+                    {%- if section.settings.subtitle != blank -%}
+                        <div class="section-subtitle">
+                            <p class="">{{ section.settings.subtitle }}</p>
+                        </div>
+                    {%- endif -%}
+                    {%- if section.settings.title != blank -%}
+                        <div class="section-title">
+                            <h2 class="">{{ section.settings.title }}</h2>
+                        </div>
+                    {%- endif -%}
+                    {%- if section.settings.text != blank -%}
+                        <div class="section-text">
+                            <p class="">{{ section.settings.text }}</p>
+                        </div>
+                    {%- endif -%}
+                </div>
+                <div class="image-with-icons--icons">
+                    {% for block in section.blocks %}
+                        <div class="image-with-icons--icon">
+                            <div class="iwi--icon">
+                                {{ block.settings.icon }}
+                            </div>
+                            <div class="iwi--text">
+                                {{ block.settings.text }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="image-with-icons--column">
+                <div class="image-with-icons--image">
+                    {% render 'lazy-img' image: section.settings.image, image_class: '' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Image with icons",
+        "settings": [
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "Subtitle",
+                "default": "PROVEN TO WORK"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "82% POSITIVE RESULTs"
+            },
+            {
+                "type": "richtext",
+                "id": "text",
+                "label": "Text",
+                "default": "<p>When asking Notox Babes about their experience with the Selfie Line,  82% stated that they have seen an improvement in their skin because of Notox Skin Products on a daily basis.</p>"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+                "type": "header",
+                "content": "Color"
+            },
+            {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text color",
+                "default": "#38393e"
+            },
+            {
+                "type": "color",
+                "id": "back_color",
+                "label": "Background color",
+                "default": "#ffffff"
+            },
+            {
+                "type": "header",
+                "content": "Padding"
+            },
+            {
+                "type": "range",
+                "id": "padding_top",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Padding top",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Padding bottom",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "padding_top_m",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Moble padding top",
+                "default": 50
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom_m",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Moble bottom top",
+                "default": 50
+            }
+        ],
+        "blocks": [
+            {
+                "type": "icon_with_text",
+                "name": "Icon with text",
+                "settings": [
+                    {
+                        "type": "html",
+                        "id": "icon",
+                        "label": "SVG icon"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "text",
+                        "label": "Text"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+                {
+                    "name": "Image with icons"
+                }
+        ]
+    }
+{% endschema %}
