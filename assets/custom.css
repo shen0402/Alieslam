@@ -89,6 +89,7 @@ sticky-header {
     border-color: transparent;
     padding-bottom: 10px;
     font-weight: bold;
+    transition: 0.3s;
 }
 
 .header__menu-item:hover, .header__menu-item:hover {
@@ -136,8 +137,20 @@ sticky-header {
     margin: 0 auto;
 }
 
+.section-subtitle p {
+    font-size: 16px;
+    color: #936ed4 !important;
+    margin: 0;
+    font-weight: bold;
+}
+
 .section-title h2 {
     font-size: 42px;
+    margin: 0;
+}
+
+.iwt--1 .section-title {
+    margin-top: 48px;
 }
 
 .iwt-list--1 {
@@ -178,6 +191,10 @@ sticky-header {
 }
 
 @media (max-width: 749px) {
+    .iwt--1 .section-title {
+        margin-top: 43px;
+    }
+
     .section-title h2 {
         font-size: 32px;
     }
@@ -204,5 +221,231 @@ sticky-header {
 
     .iwt-text--1 * {
         font-size: 14px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .about-us-video .custom-section {
+        padding-left: 155px;
+        padding-right: 155px;
+    }
+}
+
+.about-us-video .section-title {
+    margin-top: 20px;
+}
+
+.accordion-with-video {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    margin-top: 100px;
+    gap: 30px;
+}
+
+.accordion-with-video .accordion, .accordion-with-video .video {
+    width: 50%;
+}
+
+.accordion-with-video .accordion {
+    margin-top: 50px;
+}
+
+.accordion-tab--list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #38393e;
+    overflow-y: auto;
+}
+
+.accordion-tab--item {
+    margin-left: 70px; 
+}
+
+.accordion-tab--item p {
+    font-size: 16px;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: max-content;
+    margin: 0;
+}
+
+.accordion-tab--item:first-of-type {
+    margin-left: 0;
+}
+
+.accordion-tab--item.active p, .accordion-tab--item:hover p {
+    color: #936ed4 !important;
+    border-color: currentColor;
+}
+
+.accordion-contents {
+    margin-top: 60px;
+}
+
+.accordion-content {
+    display: none;
+}
+
+.accordion-content.active {
+    display: block;
+}
+
+.accordion-content--title h3 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.accordion-content--text {
+    margin-top: 48px;
+}
+
+.accordion-content--text * {
+    font-size: 16px;
+    margin: 0;
+}
+
+.video-container {
+    display: none;
+}
+
+.video-container.active {
+    display: block;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+}
+
+.video-container div {
+    width: 100%;
+    height: 100%;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.play-video {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.play-video:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.play-video:active {
+    transform: translate(-50%, -50%) scale(0.9);
+}
+
+.boxs-list {
+    margin-top: 86px;
+}
+
+.boxs-list {
+    display: flex;
+    align-items: center;
+}
+
+.box--header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box--icon {
+    display: flex;
+}
+
+.box--text * {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    margin-left: 30px;
+    width: max-content;
+}
+
+.box-items {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 150px;
+    width: max-content;
+}
+
+.box--body {
+    overflow-y: auto;
+    width: 100%;
+}
+
+.box-item {
+    margin-left: 10px;
+    width: max-content;
+}
+
+.box-item:first-of-type {
+    margin-left: 0;
+}
+
+.box-item--image {
+    text-align: center;
+}
+
+.box-item--text {
+    padding: 14px 0;
+}
+
+.box-item--text p {
+    margin: 0;
+    font-size: 14px;
+}
+
+@media (max-width: 749px) {
+    .about-us-video .section-title {
+        margin-top: 25px;
+    }
+
+    .accordion-with-video {
+        margin-top: 64px;
+        flex-direction: column;
+    }
+
+    .accordion-with-video .accordion, .accordion-with-video .video {
+        width: 100%;
+    }
+
+    .accordion-with-video .video {
+        width: 100vw;
+        margin-left: -30px;
+    }
+
+    .boxs-list {
+        margin-top: 68px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .box-items {
+        margin-left: 0;
     }
 }

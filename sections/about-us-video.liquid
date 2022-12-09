@@ -1,0 +1,228 @@
+{%- render 'section-style' -%}
+<div id="section--{{ section.id }}" class="about-us-video">
+    <div class="custom-section">
+        {%- if section.settings.subtitle != blank -%}
+            <div class="section-subtitle">
+                <p class="text-center">{{ section.settings.subtitle }}</p>
+            </div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+            <div class="section-title">
+                <h2 class="text-center">{{ section.settings.title }}</h2>
+            </div>
+        {%- endif -%}
+
+        {%- assign accordions = section.blocks | where: "type", "accordion_with_video" -%}
+        {%- if accordions.size > 0 -%}
+            <div class="accordion-with-video">
+                <div class="accordion">
+                    <ul class="accordion-tab--list">
+                        {%- for accordion in accordions -%}
+                            <li class="accordion-tab--item {% if forloop.first %}active{% endif %}" data-accordion-target="accordion--{{ accordion.id }}"><p>{{ accordion.settings.title }}</p></li>
+                        {%- endfor -%}
+                    </ul>
+                    <div class="accordion-contents">
+                        {%- for accordion in accordions -%}
+                            <div class="accordion-content {% if forloop.first %}active{% endif %}" data-accordion-id="accordion--{{ accordion.id }}">
+                                <div class="accordion-content--title"><h3>{{ accordion.settings.title }}</h3></div>
+                                <div class="accordion-content--text">{{ accordion.settings.text }}</div>
+                            </div>
+                        {%- endfor -%}
+                    </div>
+                </div>
+                <div class="video">
+                    {% for accordion in accordions %}
+                        <div class="video-container {% if forloop.first %}active{% endif %}" data-accordion-id="accordion--{{ accordion.id }}">
+                            <div data-video-type="{{ accordion.settings.video_url.type }}">
+                                <span class="play-video">
+                                    {%- render 'icon-play' -%}
+                                </span>
+                                {%- if accordion.settings.video_url.type == 'youtube' -%}
+                                    <iframe src="https://www.youtube.com/embed/{{ accordion.settings.video_url.id }}?enablejsapi=1" class="js-youtube" allow="autoplay; encrypted-media" allowfullscreen title=""></iframe>
+                                  {%- else -%}
+                                    <iframe src="https://player.vimeo.com/video/{{ accordion.settings.video_url.id }}" class="js-vimeo" allow="autoplay; encrypted-media" allowfullscreen title=""></iframe>
+                                  {%- endif -%}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {%- endif -%}
+
+        {%- assign boxs = section.blocks | where: "type", "box" -%}
+        {%- if boxs.size > 0 -%}
+            <div class="boxs-list">
+                {%- assign box_header = section.blocks | where: "type", "box_header" | first -%}
+                <div class="box--header">
+                    <div class="box--icon">
+                        {{ box_header.settings.icon }}
+                    </div>
+                    <div class="box--text">
+                        <p>{{ box_header.settings.title }}</p>
+                    </div>
+                </div>
+
+                <div class="box--body">
+                    <div class="box-items">
+                        {% for box in boxs %}
+                            <div class="box-item">
+                                <div class="box-item--image">
+                                    {% render 'lazy-img' image: box.settings.image, image_class: '' %}
+                                </div>
+                                <div class="box-item--text">
+                                    <p class="text-center">{{ box.settings.text }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "About us with video",
+        "settings": [
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "Subtitle",
+                "default": "EVERYTHING YOU NEED TO KNOW"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "SERUM FREE TRIAL"
+            },
+            {
+                "type": "header",
+                "content": "Color"
+            },
+            {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text color",
+                "default": "#38393e"
+            },
+            {
+                "type": "color",
+                "id": "back_color",
+                "label": "Background color",
+                "default": "#ffffff"
+            },
+            {
+                "type": "header",
+                "content": "Padding"
+            },
+            {
+                "type": "range",
+                "id": "padding_top",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Padding top",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Padding bottom",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "padding_top_m",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Moble padding top",
+                "default": 50
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom_m",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "label": "Moble bottom top",
+                "default": 50
+            }
+        ],
+        "blocks": [
+            {
+                "type": "accordion_with_video",
+                "name": "Accordion with video",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "text",
+                        "label": "Text"
+                    },
+                    {
+                        "type": "video_url",
+                        "id": "video_url",
+                        "accept": [
+                            "youtube",
+                            "vimeo"
+                        ],
+                        "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+                        "label": "t:sections.video.settings.video_url.label",
+                        "placeholder": "t:sections.video.settings.video_url.placeholder",
+                        "info": "t:sections.video.settings.video_url.info"
+                    }
+                ]
+            },
+            {
+                "type": "box_header",
+                "name": "Box Header",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "html",
+                        "id": "icon",
+                        "label": "Icon"
+                    }
+                ]
+            },
+            {
+                "type": "box",
+                "name": "Box",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Image"
+                    },
+                    {
+                        "type": "text",
+                        "id": "text",
+                        "label": "Text"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "About us with video"
+            }
+        ]
+    }
+{% endschema %}
