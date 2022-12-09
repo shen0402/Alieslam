@@ -1,3 +1,8 @@
+
+body * {
+    letter-spacing: -1px;
+}
+
 .announcement-bar {
     overflow-y: auto;
     border: none;
@@ -149,6 +154,16 @@ sticky-header {
     margin: 0;
 }
 
+.section-text {
+    margin-top: 50px;
+}
+
+.section-text {
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+}
+
 .iwt--1 .section-title {
     margin-top: 48px;
 }
@@ -172,6 +187,11 @@ sticky-header {
 
 .iwt-text--1 {
     margin-top: 20px;
+    gap: 5px;
+}
+
+.iwt-text--1 p:last-of-type {
+    margin-top: 5px;
 }
 
 .iwt-text--1 * {
@@ -221,6 +241,10 @@ sticky-header {
 
     .iwt-text--1 * {
         font-size: 14px;
+    }
+
+    .iwt-text--1 p:last-of-type {
+        margin-top: 0;
     }
 }
 
@@ -447,5 +471,60 @@ sticky-header {
 
     .box-items {
         margin-left: 0;
+    }
+}
+
+.iwt--2 .section-subtitle p {
+    color: #f48ba9 !important;
+}
+
+.iwt-list--2 {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.iwt-item--2 {
+    width: 234px;
+    margin-left: 30px;
+    margin-top: 30px;
+    padding: 50px 20px 36px;
+}
+
+.iwt-item--2:first-of-type {
+    margin-left: 0;
+}
+
+.iwt-title--2 p {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.iwt-title--2 {
+    margin-top: 15px;
+}
+
+.iwt-text--2 {
+    margin-top: 18px;
+}
+
+.iwt-text--2 p {
+    font-size: 16px;
+    margin: 0;
+}
+
+@media (max-width: 750px) {
+    .iwt-list--2 {
+        margin-top: 27px;
+        padding: 50px 0 36px;
+        width: 100vw;
+        margin-left: -30px;
+    }
+    
+    .iwt-item--2 {
+        width: 50%;
+        margin: 0;
     }
 }

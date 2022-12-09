@@ -1,0 +1,150 @@
+{%- render 'section-style' -%}
+<div id="section--{{ section.id }}" class="iwt--2">
+    <div class="custom-section">
+        {%- if section.settings.subtitle != blank -%}
+            <div class="section-subtitle">
+                <p class="text-center">{{ section.settings.subtitle }}</p>
+            </div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+            <div class="section-title">
+                <h2 class="text-center">{{ section.settings.title }}</h2>
+            </div>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+            <div class="section-text">
+                <p class="text-center">{{ section.settings.text }}</p>
+            </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+            <div class="iwt-list--2">
+                {% for block in section.blocks %}
+                    <div class="iwt-item--2">
+                        <div class="iwt-icon--2 text-center">
+                            {{ block.settings.icon }}
+                        </div>
+                        <div class="iwt-title--2">
+                            <p class="text-center">{{ block.settings.title }}</p>
+                        </div>
+                        <div class="iwt-text--2">
+                            <p class="text-center">{{ block.settings.text }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {%- endif -%}
+    </div>
+</div>
+{%- schema -%}
+{
+    "name": "Icons with text 2",
+    "settings": [
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": "THE HIGHEST QUALITY EVERYTHING"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "THE MAGIC STUFF"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>We have sourced the finest ingredients from all of the world.</p>"
+        },
+        {
+            "type": "header",
+            "content": "Color"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#38393e"
+        },
+        {
+            "type": "color",
+            "id": "back_color",
+            "label": "Background color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "header",
+            "content": "Padding"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Padding top",
+            "default": 100
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Padding bottom",
+            "default": 100
+        },
+        {
+            "type": "range",
+            "id": "padding_top_m",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Moble padding top",
+            "default": 50
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom_m",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "label": "Moble bottom top",
+            "default": 50
+        }
+    ],
+    "blocks": [
+        {
+            "type": "icon_with_text",
+            "name": "Icon witht text",
+            "settings": [
+                {
+                    "type": "html",
+                    "id": "icon",
+                    "label": "SVG Icon"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Icons with text 2"
+        }
+    ]
+}
+{%- endschema -%}
