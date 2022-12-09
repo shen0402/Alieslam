@@ -5,12 +5,23 @@
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    {% assign mobile_image = section.settings.image_m | default: section.settings.image %}
+      background-image: url("{{ mobile_image | img_url: '1900x' }}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: local;
+  }
+
+  .newsletter {
+    padding: 50px 60px;
   }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
+      background-image: url("{{ section.settings.image | img_url: '1900x' }}");
     }
   }
 {%- endstyle -%}
@@ -22,15 +33,20 @@
         {%- when '@app' -%}
           {% render block %}
         {%- when 'heading' -%}
-          <h2 class="{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>
+          <div class="newsletter-text">
+            <h2 class="{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>
         {%- when 'paragraph' -%}
-          <div class="newsletter__subheading rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+            <div class="newsletter__subheading rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          </div>
         {%- when 'email_form' -%}
-          <div {{ block.shopify_attributes }}>
+          <div class="newsletter-form--wrapper" {{ block.shopify_attributes }}>
             {% form 'customer', class: 'newsletter-form' %}
               <input type="hidden" name="contact[tags]" value="newsletter">
               <div class="newsletter-form__field-wrapper">
                 <div class="field">
+                  <span class="icon-mail">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="635 1736 20 15"><path d="M645 1747.25c-.651 0-1.263-.208-1.836-.625l-8.164-6.367v8.867c.026.52.208.964.547 1.328.364.339.807.521 1.328.547h16.25c.52-.026.964-.208 1.328-.547.339-.364.521-.807.547-1.328v-8.867l-8.164 6.367c-.573.417-1.185.625-1.836.625Zm-9.375-8.086 8.281 6.445c.339.26.703.391 1.094.391.39 0 .755-.13 1.094-.39l8.281-6.446c.39-.338.599-.768.625-1.289a2.038 2.038 0 0 0-.547-1.328 2.038 2.038 0 0 0-1.328-.547h-16.25c-.52.026-.964.208-1.328.547-.339.364-.521.807-.547 1.328 0 .52.208.95.625 1.29Z" fill="#f48ba9" fill-rule="evenodd" data-name="Path 31"/></svg>
+                  </span>
                   <input
                     id="NewsletterForm--{{ section.id }}"
                     type="email"
@@ -48,13 +64,11 @@
                     {% elsif form.posted_successfully? %}
                       aria-describedby="Newsletter-success--{{ section.id }}"
                     {% endif %}
-                    placeholder="{{ 'newsletter.label' | t }}"
+                    placeholder="YOUR EMAIL"
                     required
                   >
-                  <label class="field__label" for="NewsletterForm--{{ section.id }}">
-                    {{ 'newsletter.label' | t }}
-                  </label>
                   <button type="submit" class="newsletter-form__button field__button" name="commit" id="Subscribe" aria-label="{{ 'newsletter.button_label' | t }}">
+                    go
                     {% render 'icon-arrow' %}
                   </button>
                 </div>
@@ -79,32 +93,14 @@
   "class": "section",
   "settings": [
     {
-      "type": "select",
-      "id": "color_scheme",
-      "options": [
-        {
-          "value": "accent-1",
-          "label": "t:sections.all.colors.accent_1.label"
-        },
-        {
-          "value": "accent-2",
-          "label": "t:sections.all.colors.accent_2.label"
-        },
-        {
-          "value": "background-1",
-          "label": "t:sections.all.colors.background_1.label"
-        },
-        {
-          "value": "background-2",
-          "label": "t:sections.all.colors.background_2.label"
-        },
-        {
-          "value": "inverse",
-          "label": "t:sections.all.colors.inverse.label"
-        }
-      ],
-      "default": "background-1",
-      "label": "t:sections.all.colors.label"
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_m",
+      "label": "Mobile background image"
     },
     {
       "type": "checkbox",
