@@ -1,0 +1,21 @@
+{% style %}
+    #section--{{ section.id }} {
+        background-color: {{ section.settings.back_color }};
+    }
+
+    #section--{{ section.id }} * {
+        color: {{ section.settings.text_color }};
+    }
+
+    #section--{{ section.id }} .custom-section {
+        padding: {{ section.settings.padding_top }}px 50px {{ section.settings.padding_bottom }}px;
+        max-width: 1600px;
+        margin: auto;
+    }
+
+    @media (max-width: 989px) {
+        #section--{{ section.id }} .custom-section {
+            padding: {{ section.settings.padding_top_m }}px 30px {{ section.settings.padding_bottom_m }}px;
+        }
+    }
+{% endstyle %}
