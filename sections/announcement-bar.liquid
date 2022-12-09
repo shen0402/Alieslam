@@ -1,18 +1,38 @@
+{% style %}
+  .announcement-bar {
+    background-color: {{ section.settings.back_color }};
+  }
+
+  .announcement-bar * {
+    color: {{ section.settings.text_color }};
+  }
+{% endstyle %}
 {%- for block in section.blocks -%}
   {%- case block.type -%}
     {%- when 'announcement' -%}
       <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
-        {%- if block.settings.text != blank -%}
+        {%- if block.settings.text1 != blank -%}
           {%- if block.settings.link != blank -%}
             <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
-          {%- endif -%}
-              <p class="announcement-bar__message h5">
-                {{ block.settings.text | escape }}
-                {%- if block.settings.link != blank -%}
-                  {% render 'icon-arrow' %}
-                {%- endif -%}
-              </p>
-          {%- if block.settings.link != blank -%}
+            {%- endif -%}
+            <p class="announcement-bar__message h5">
+              {%- if block.settings.icon1 -%}
+                {{ block.settings.icon1 }}
+              {%- endif -%}
+              {%- if block.settings.text1 -%}
+                <span>{{ block.settings.text1 }}</span>
+              {%- endif -%}
+              {%- if block.settings.icon2 -%}
+                {{ block.settings.icon2 }}
+              {%- endif -%}
+              {%- if block.settings.text2 -%}
+                <span>{{ block.settings.text2 }}</span>
+              {%- endif -%}
+              {%- if block.settings.link != blank -%}
+                {% render 'icon-arrow' %}
+              {%- endif -%}
+            </p>
+            {%- if block.settings.link != blank -%}
             </a>
           {%- endif -%}
         {%- endif -%}
@@ -21,62 +41,64 @@
 {%- endfor -%}
 
 {% schema %}
-{
-  "name": "t:sections.announcement-bar.name",
-  "max_blocks": 12,
-  "blocks": [
-    {
-      "type": "announcement",
-      "name": "t:sections.announcement-bar.blocks.announcement.name",
-      "settings": [
+  {
+    "name": "t:sections.announcement-bar.name",
+    "settings": [
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#38393e"
+      }, {
+        "type": "color",
+        "id": "back_color",
+        "default": "#fcd0dd",
+        "label": "Background Color"
+      }
+    ],
+    "max_blocks": 12,
+    "blocks": [
+      {
+        "type": "announcement",
+        "name": "t:sections.announcement-bar.blocks.announcement.name",
+        "settings": [
+          {
+            "type": "html",
+            "id": "icon1",
+            "label": "Icon1",
+            "default": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"20\" height=\"16\" viewBox=\"409 16 20 16\"><path d=\"M414.719 21h2.781c.208 0 .365.104.469.313a.498.498 0 0 1-.125.53l-3 3c-.23.21-.459.21-.688 0-.208-.228-.208-.458 0-.687l2.125-2.187H413.5a.505.505 0 0 1-.469-.282.498.498 0 0 1 .125-.53l3-3c.23-.21.459-.21.688 0 .208.228.208.458 0 .687L414.719 21ZM409 18c.02-.562.219-1.031.594-1.406s.844-.573 1.406-.594h9c.563.02 1.031.219 1.406.594s.573.844.594 1.406v1h2.031c.459 0 .844.177 1.156.531l2.438 2.875c.25.271.375.594.375.969V28h.5c.313.02.48.188.5.5-.02.313-.188.48-.5.5H427c-.02.854-.313 1.563-.875 2.125-.563.562-1.27.854-2.125.875-.854-.02-1.563-.313-2.125-.875-.563-.563-.854-1.27-.875-2.125h-4c-.02.854-.313 1.563-.875 2.125-.563.562-1.27.854-2.125.875-.854-.02-1.563-.313-2.125-.875-.563-.563-.854-1.27-.875-2.125-.563-.02-1.031-.219-1.406-.594S409.02 27.563 409 27v-9Zm11-1h-9a.973.973 0 0 0-.719.281A.973.973 0 0 0 410 18v9c0 .292.094.531.281.719A.973.973 0 0 0 411 28h.156a3.247 3.247 0 0 1 1.094-1.438c.5-.354 1.083-.541 1.75-.562.667.02 1.25.208 1.75.563.5.375.865.854 1.094 1.437H421V18a.973.973 0 0 0-.281-.719A.973.973 0 0 0 420 17Zm2 3v3h4.844l-2.438-2.813a.473.473 0 0 0-.375-.187H422Zm2 6c.667.02 1.25.208 1.75.563.5.375.865.854 1.094 1.437H427v-4h-5v2.75c.542-.48 1.208-.73 2-.75Zm-10 5c.563-.02 1.031-.219 1.406-.594s.573-.843.594-1.406c-.02-.563-.219-1.031-.594-1.406S414.562 27.02 414 27c-.563.02-1.031.219-1.406.594s-.573.843-.594 1.406c.02.563.219 1.031.594 1.406s.844.573 1.406.594Zm10-4c-.563.02-1.031.219-1.406.594s-.573.843-.594 1.406c.02.563.219 1.031.594 1.406s.843.573 1.406.594c.562-.02 1.031-.219 1.406-.594s.573-.843.594-1.406c-.02-.563-.219-1.031-.594-1.406S424.562 27.02 424 27Z\" fill=\"currentColor\" fill-rule=\"evenodd\" data-name=\"Path 10\"/></svg>"
+          },
+          {
+            "type": "text",
+            "id": "text1",
+            "default": "FAST FREE SHIPPING ON ORDERS $50+",
+            "label": "Text1"
+          },
+          {
+            "type": "html",
+            "id": "icon2",
+            "label": "Icon2",
+            "default": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"16\" height=\"16\" viewBox=\"866 16 16 16\"><path d=\"M876.844 21.156c.208.23.208.459 0 .688l-5 5c-.23.208-.459.208-.688 0-.208-.23-.208-.459 0-.688l5-5c.23-.208.459-.208.688 0Zm-5.594.813c0-.209.073-.386.219-.532a.723.723 0 0 1 .531-.218c.208 0 .385.073.531.218a.723.723 0 0 1 .219.532c-.042.479-.292.729-.75.75-.458-.021-.708-.271-.75-.75Zm4 4c0-.209.073-.386.219-.532a.723.723 0 0 1 .531-.218c.208 0 .385.073.531.218a.723.723 0 0 1 .219.532c-.042.479-.292.74-.75.781-.458-.042-.708-.302-.75-.781Zm1.469-8.532c1.104-.187 2.083.115 2.937.907.792.854 1.094 1.833.907 2.937a3.34 3.34 0 0 1 1.062 1.157c.25.458.375.968.375 1.53-.042 1.21-.52 2.126-1.438 2.75.188 1.105-.114 2.084-.906 2.938-.854.792-1.833 1.094-2.937.907-.646.916-1.552 1.395-2.719 1.437a3.327 3.327 0 0 1-1.563-.375 3.34 3.34 0 0 1-1.156-1.063c-1.104.188-2.083-.114-2.937-.906-.792-.854-1.094-1.833-.907-2.937-.916-.625-1.395-1.542-1.437-2.75 0-.563.125-1.073.375-1.532a3.34 3.34 0 0 1 1.063-1.156c-.188-1.104.114-2.083.906-2.937.854-.792 1.833-1.094 2.937-.907a3.34 3.34 0 0 1 1.157-1.062c.458-.25.968-.375 1.53-.375 1.21.042 2.126.52 2.75 1.438Zm-4.969 1.157-.375-.125c-.854-.23-1.625-.031-2.313.593-.625.688-.822 1.459-.593 2.313l.125.375-.375.219c-.771.437-1.177 1.104-1.219 2 .042.937.448 1.625 1.219 2.062l.375.219-.125.375c-.23.854-.032 1.625.593 2.313.688.625 1.459.822 2.313.593l.375-.125.219.375c.416.771 1.093 1.177 2.031 1.219.917-.042 1.594-.448 2.031-1.219l.219-.375.375.125c.854.23 1.625.032 2.313-.593.624-.688.822-1.459.593-2.313l-.125-.375.375-.219c.771-.437 1.177-1.125 1.219-2.062-.042-.896-.448-1.563-1.219-2l-.375-.219.125-.375c.23-.854.031-1.625-.593-2.313-.688-.625-1.459-.822-2.313-.593l-.375.125-.219-.375c-.437-.771-1.114-1.188-2.031-1.25-.438 0-.844.114-1.219.343-.354.23-.625.532-.812.907l-.219.375Z\" fill=\"currentColor\" fill-rule=\"evenodd\" data-name=\"Path 11\"/></svg>"
+          },
+          {
+            "type": "text",
+            "id": "text2",
+            "default": "GET 10% OFF YOUR FIRST ORDER >",
+            "label": "Text2"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "blocks": [
         {
-          "type": "text",
-          "id": "text",
-          "default": "Welcome to our store",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
-        },
-        {
-          "type": "select",
-          "id": "color_scheme",
-          "options": [
-            {
-              "value": "accent-1",
-              "label": "t:sections.all.colors.accent_1.label"
-            },
-            {
-              "value": "accent-2",
-              "label": "t:sections.all.colors.accent_2.label"
-            },
-            {
-              "value": "background-1",
-              "label": "t:sections.all.colors.background_1.label"
-            },
-            {
-              "value": "background-2",
-              "label": "t:sections.all.colors.background_2.label"
-            },
-            {
-              "value": "inverse",
-              "label": "t:sections.all.colors.inverse.label"
-            }
-          ],
-          "default": "accent-1",
-          "label": "t:sections.all.colors.label"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+          "type": "announcement"
         }
       ]
     }
-  ],
-  "default": {
-    "blocks": [
-      {
-        "type": "announcement"
-      }
-    ]
   }
-}
 {% endschema %}

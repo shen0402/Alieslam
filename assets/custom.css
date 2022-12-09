@@ -1,0 +1,19 @@
+.announcement-bar {
+    overflow-y: auto;
+    border: none;
+}
+
+.announcement-bar__message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: #38393e;
+    width: max-content;
+    margin: auto;
+}
+
+.announcement-bar__message svg:nth-child(2) {
+    margin-left: 15px;
+}
