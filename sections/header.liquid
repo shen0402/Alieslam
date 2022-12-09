@@ -27,6 +27,9 @@
 <noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
 
 <style>
+  #shopify-section-header * {
+    color: {{ section.settings.text_color }};
+  }
   header-drawer {
     justify-self: start;
     margin-left: -1.2rem;
@@ -36,9 +39,17 @@
     max-width: {{ section.settings.logo_width }}px;
   }
 
+  #shopify-section-header {
+    background-color: {{ section.settings.back_color }};
+    padding: 0 20px 20px;
+  }
+
   @media screen and (min-width: 990px) {
     header-drawer {
       display: none;
+    }
+    #shopify-section-header {
+      padding: 0 50px 20px;
     }
   }
 
@@ -101,7 +112,7 @@
   @media screen and (min-width: 990px) {
     .header {
       padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-bottom: 0;
     }
   }
 {%- endstyle -%}
@@ -369,6 +380,13 @@
       </details-modal>
     {%- endif -%}
 
+    <div class="header__icon header-wholesale">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="19.989" viewBox="83 83.5 25 19.989">
+        <path d="M100.5 89.75h2.5c.365 0 .664-.117.898-.352.235-.234.352-.533.352-.898V86c0-.365-.117-.664-.352-.898-.234-.235-.533-.352-.898-.352h-2.5c-.365 0-.664.117-.898.352-.235.234-.352.533-.352.898v2.5c0 .365.117.664.352.898.234.235.533.352.898.352Zm0-3.75h2.5v2.5h-2.5V86Zm-8.75 10h5c.365 0 .664-.117.898-.352.235-.234.352-.533.352-.898V86c0-.365-.117-.664-.352-.898-.234-.235-.533-.352-.898-.352h-5c-.365 0-.664.117-.898.352-.235.234-.352.533-.352.898v8.75c0 .365.117.664.352.898.234.235.533.352.898.352Zm0-10h5v8.75h-5V86Zm8.75 10h5c.365 0 .664-.117.898-.352.235-.234.352-.533.352-.898v-2.5c0-.365-.117-.664-.352-.898-.234-.235-.533-.352-.898-.352h-5c-.365 0-.664.117-.898.352-.235.234-.352.533-.352.898v2.5c0 .365.117.664.352.898.234.235.533.352.898.352Zm0-3.75h5v2.5h-5v-2.5Zm6.875 6.25H88V85.375a2.038 2.038 0 0 0-.547-1.328 2.038 2.038 0 0 0-1.328-.547h-2.5c-.39.026-.599.234-.625.625.026.39.234.599.625.625h2.5c.39.026.599.234.625.625V98.5c0 .365.117.664.352.898.234.235.533.352.898.352h.977c-.365.573-.443 1.237-.235 1.992.156.443.404.82.742 1.133.339.312.743.508 1.211.586.808.104 1.498-.078 2.07-.547.547-.495.834-1.133.86-1.914a2.26 2.26 0 0 0-.352-1.25h6.954a2.26 2.26 0 0 0-.352 1.25c.026.781.313 1.42.86 1.914.572.469 1.262.651 2.07.547a2.304 2.304 0 0 0 1.21-.586c.34-.313.587-.69.743-1.133.182-.755.104-1.42-.235-1.992h2.852c.39-.026.599-.234.625-.625-.026-.39-.234-.599-.625-.625Zm-16.25 3.75c-.365 0-.664-.117-.898-.352-.235-.234-.352-.533-.352-.898s.117-.664.352-.898c.234-.235.533-.352.898-.352s.664.117.898.352c.235.234.352.533.352.898s-.117.664-.352.898c-.234.235-.533.352-.898.352Zm11.25 0c-.365 0-.664-.117-.898-.352-.235-.234-.352-.533-.352-.898s.117-.664.352-.898c.234-.235.533-.352.898-.352s.664.117.898.352c.235.234.352.533.352.898s-.117.664-.352.898c-.234.235-.533.352-.898.352Z" fill="currentColor" fill-rule="evenodd" data-name="Path 8"/>
+      </svg>
+      <span>Wholesale</span>
+    </div>
+
     {%- if request.page_type == 'index' -%}
       <h1 class="header__heading">
     {%- endif -%}
@@ -490,7 +508,7 @@
       {%- endif -%}
     {%- endif -%}
 
-    <div class="header__icons">
+    <div class="header__icons header__icons-top">
       <details-modal class="header__search">
         <details>
           <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
@@ -564,22 +582,14 @@
         </details>
       </details-modal>
 
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
-          {% render 'icon-account' %}
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
-        </a>
-      {%- endif -%}
-
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        <div class="cart-count-bubble">
+          {%- if cart.item_count < 100 -%}
+            <span aria-hidden="true"><span class="small-hide medium-hide">My bag</span>({{ cart.item_count }})</span>
+          {%- endif -%}
+          <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+        </div>
         {%- liquid
           if cart == empty
             render 'icon-cart-empty'
@@ -587,16 +597,27 @@
             render 'icon-cart'
           endif
         -%}
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
       </a>
+    </div>
+
+    <div class="header__icons">
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
+        {% render 'icon-account' %}
+        <span class="visually-hidden">
+          {%- liquid
+            if customer
+              echo 'customer.account_fallback' | t
+            else
+              echo 'customer.log_in' | t
+            endif
+          -%}
+        </span>
+      </a>
+      <div class="header__icon header__shipping">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="20" viewBox="1485 150.5 25 20">
+          <path d="M1488.75 153v1.25h5.625c.39.026.599.234.625.625-.026.39-.234.599-.625.625h-8.75c-.39-.026-.599-.234-.625-.625.026-.39.234-.599.625-.625h1.875V153c.026-.703.273-1.29.742-1.758.469-.469 1.055-.716 1.758-.742h8.75c.703.026 1.29.273 1.758.742.469.469.716 1.055.742 1.758v1.25h2.54c.572 0 1.054.221 1.444.664l3.047 3.594c.313.338.469.742.469 1.21v5.782h.625c.39.026.599.234.625.625-.026.39-.234.599-.625.625h-1.875c-.026 1.068-.39 1.953-1.094 2.656-.703.703-1.588 1.068-2.656 1.094-1.068-.026-1.953-.39-2.656-1.094-.703-.703-1.068-1.588-1.094-2.656h-5.04c-.025 1.068-.39 1.953-1.093 2.656-.703.703-1.588 1.068-2.656 1.094-1.068-.026-1.953-.39-2.656-1.094-.703-.703-1.068-1.588-1.094-2.656v-5h1.25v2.188c.703-.6 1.536-.912 2.5-.938.86.026 1.601.26 2.226.703a4.059 4.059 0 0 1 1.368 1.797H1500V153c0-.365-.117-.664-.352-.898-.234-.235-.533-.352-.898-.352h-8.79c-.338 0-.624.117-.858.352a1.361 1.361 0 0 0-.391.898h.039Zm15.508 2.734a.592.592 0 0 0-.469-.234h-2.539v3.75h6.055l-3.047-3.516Zm-3.008 4.766v3.438c.677-.6 1.51-.912 2.5-.938.833.026 1.562.26 2.188.703a4.059 4.059 0 0 1 1.367 1.797h.195v-5h-6.25Zm-10 3.75c-.703.026-1.29.273-1.758.742-.469.469-.716 1.055-.742 1.758.026.703.273 1.29.742 1.758.469.469 1.055.716 1.758.742.703-.026 1.29-.273 1.758-.742.469-.469.716-1.055.742-1.758-.026-.703-.273-1.29-.742-1.758-.469-.469-1.055-.716-1.758-.742Zm12.5 5c.703-.026 1.29-.273 1.758-.742.469-.469.716-1.055.742-1.758-.026-.703-.273-1.29-.742-1.758-.469-.469-1.055-.716-1.758-.742-.703.026-1.29.273-1.758.742-.469.469-.716 1.055-.742 1.758.026.703.273 1.29.742 1.758.469.469 1.055.716 1.758.742Zm-8.125-12.5c.39.026.599.234.625.625-.026.39-.234.599-.625.625h-8.75c-.39-.026-.599-.234-.625-.625.026-.39.234-.599.625-.625h8.75Zm-1.25 2.5c.39.026.599.234.625.625-.026.39-.234.599-.625.625h-8.75c-.39-.026-.599-.234-.625-.625.026-.39.234-.599.625-.625h8.75Z" fill="currentColor" fill-rule="evenodd" data-name="Path 13"/>
+        </svg>
+      </div>
     </div>
   </header>
 </{% if section.settings.enable_sticky_header %}sticky-header{% else %}div{% endif %}>
@@ -743,32 +764,16 @@
   "class": "section-header",
   "settings": [
     {
-      "type": "select",
-      "id": "color_scheme",
-      "options": [
-        {
-          "value": "accent-1",
-          "label": "t:sections.all.colors.accent_1.label"
-        },
-        {
-          "value": "accent-2",
-          "label": "t:sections.all.colors.accent_2.label"
-        },
-        {
-          "value": "background-1",
-          "label": "t:sections.all.colors.background_1.label"
-        },
-        {
-          "value": "background-2",
-          "label": "t:sections.all.colors.background_2.label"
-        },
-        {
-          "value": "inverse",
-          "label": "t:sections.all.colors.inverse.label"
-        }
-      ],
-      "default": "background-1",
-      "label": "t:sections.all.colors.label"
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#38393e"
+    },
+    {
+      "type": "color",
+      "id": "back_color",
+      "default": "#fcd0dd",
+      "label": "Background Color"
     },
     {
       "type": "image_picker",
