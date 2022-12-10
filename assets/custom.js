@@ -94,4 +94,8 @@ function postMessageToPlayer(player, command){
         }
       ]
     });
+
+    $('.quantity__atc').click(function(){
+      $('.product-form__submit').click();
+    });
 });

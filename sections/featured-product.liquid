@@ -31,7 +31,7 @@
 {%- endif -%}
 
 <section class="color-{{ section.settings.color_scheme }} {% if section.settings.secondary_background %}background-secondary{% else %}gradient{% endif %}">
-  <div class="page-width section-{{ section.id }}-padding{% if section.settings.secondary_background %} isolate{% endif %}">
+  <div class="section-{{ section.id }}-padding{% if section.settings.secondary_background %} isolate{% endif %}">
     <div class="featured-product product grid grid--1-col gradient color-{{ section.settings.color_scheme }}{% if section.settings.secondary_background == false %} isolate{% endif %} {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         <media-gallery id="MediaGallery-{{ section.id }}" role="region" aria-label="{{ 'products.product.media.gallery_viewer' | t }}" data-desktop-layout="stacked">
@@ -95,19 +95,20 @@
                   {{ 'onboarding.product_title' | t }}
                 {%- endif -%}
               </h2>
+              <div class="yotpo-widget-instance" data-yotpo-instance-id="297416" data-yotpo-product-id="{{product.id}}"></div>
             {%- when 'price' -%}
               <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
+                {%- render 'price', product: product, use_variant: true, show_badges: false, price_class: 'price--large' -%}
               </div>
               {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
-                <div class="product__tax caption rte">
+                {%- comment -%} <div class="product__tax caption rte">
                   {%- if shop.taxes_included -%}
                     {{ 'products.product.include_taxes' | t }}
                   {%- endif -%}
                   {%- if shop.shipping_policy.body != blank -%}
                     {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
                   {%- endif -%}
-                </div>
+                </div> {%- endcomment -%}
               {%- endif -%}
               {%- if product != blank -%}
                 <div {{ block.shopify_attributes }}>
@@ -123,10 +124,11 @@
                   {{ 'products.product.quantity.label' | t }}
                 </label>
                 <quantity-input class="quantity">
-                  <button class="quantity__button no-js-hidden" name="minus" type="button">
-                    <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-                    {% render 'icon-minus' %}
+                  <button class="quantity__button no-js-hidden" name="plus" type="button">
+                    <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+                    {% render 'icon-plus' %}
                   </button>
+                  
                   <input class="quantity__input"
                       type="number"
                       name="quantity"
@@ -135,9 +137,13 @@
                       value="1"
                       form="{{ product_form_id }}"
                     >
-                  <button class="quantity__button no-js-hidden" name="plus" type="button">
-                    <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-                    {% render 'icon-plus' %}
+                    <button class="quantity__button no-js-hidden" name="minus" type="button">
+                      <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+                      {% render 'icon-minus' %}
+                    </button>
+                  <button class="quantity__atc" type="button">
+                    <p>Add to bag</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22.505" height="20" viewBox="1347 848 22.505 20"><path d="M1356.494 848.113c.495.313.625.73.39 1.25l-3.164 6.134h9.065l-3.165-6.134c-.235-.52-.104-.937.39-1.25.521-.234.938-.104 1.25.39l3.634 6.994h3.36c.365 0 .665.118.9.352.233.234.35.534.35.899 0 .364-.117.664-.35.898-.235.235-.535.352-.9.352l-2.031 8.127c-.157.547-.456.99-.899 1.328-.443.365-.95.547-1.524.547h-11.135a2.329 2.329 0 0 1-1.524-.547 2.576 2.576 0 0 1-.86-1.328l-2.03-8.127c-.365 0-.665-.117-.9-.352-.234-.234-.351-.534-.351-.898 0-.365.117-.665.352-.899.234-.234.534-.352.898-.352h3.36l3.634-6.993c.312-.495.73-.625 1.25-.391Zm-3.868 11.448c.573-.052.886-.365.938-.938-.052-.573-.365-.886-.938-.938-.573.052-.885.365-.938.938.053.573.365.886.938.938Zm11.253-1.876c-.574.052-.886.365-.938.938.052.573.364.886.938.938.573-.052.885-.365.937-.938-.052-.573-.364-.886-.937-.938Z" fill="currentColor" fill-rule="evenodd" data-name="Path 15"/></svg>
                   </button>
                 </quantity-input>
               </div>
@@ -192,9 +198,19 @@
                                   form="{{ product_form_id }}"
                                   {% if option.selected_value == value %}checked{% endif %}
                             >
-                            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                              {%- for variant in product.variants -%}
+                                {%- if variant.title == value -%}
+                                  {%- assign back_image = variant.featured_image -%}
+                                {%- endif -%}
+                              {%- endfor -%}
+                            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" data-option-name="{{ value | handleize }}">
                               {{ value }}
                             </label>
+                            <style>
+                              [for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"]::before {
+                                background-image: url({{ back_image | img_url: '150x' }});
+                              }
+                            </style>
                           {%- endfor -%}
                         </fieldset>
                     {%- endfor -%}
@@ -335,6 +351,13 @@
                   <span class="visually-hidden">{{ product.metafields.reviews.rating_count }} {{ "accessibility.total_reviews" | t }}</span>
                 </p>
               {%- endif -%}
+            {%- when 'shipping' -%}
+              <div class="product__shipping-message">
+                <span class="product__shipping-message--icon">
+                  {{ block.settings.shipping_icon }}
+                </span>
+                <p class="product__shipping-message--text">{{ block.settings.shipping_msg }}</p>
+              </div>
             {%- endcase -%}
           {%- endfor -%}
         <a{% if product == blank %} role="link" aria-disabled="true"{% else %} href="{{ product.url }}"{% endif %} class="link product__view-details animate-arrow">
@@ -619,6 +642,25 @@
         {
           "type": "paragraph",
           "content": "t:sections.featured-product.blocks.rating.settings.paragraph.content"
+        }
+      ]
+    },
+    {
+      "type": "shipping",
+      "name": "Shipping",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "shipping_icon",
+          "label": "SVG Icon",
+          "default": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"25\" height=\"20\" viewBox=\"891 934 25 20\"><path d=\"M898.148 940.25h3.477c.26 0 .456.13.586.39.078.261.026.482-.156.665l-3.75 3.75c-.287.26-.573.26-.86 0-.26-.287-.26-.573 0-.86l2.657-2.734h-3.477a.631.631 0 0 1-.586-.352c-.078-.26-.026-.481.156-.664l3.75-3.75c.287-.26.573-.26.86 0 .26.287.26.573 0 .86l-2.657 2.695ZM891 936.5c.026-.703.273-1.29.742-1.758.469-.469 1.055-.716 1.758-.742h11.25c.703.026 1.29.273 1.758.742.469.469.716 1.055.742 1.758v1.25h2.54c.572 0 1.054.221 1.444.664l3.047 3.594c.313.338.469.742.469 1.21V949h.625c.39.026.599.234.625.625-.026.39-.234.599-.625.625H913.5c-.026 1.068-.39 1.953-1.094 2.656-.703.703-1.588 1.068-2.656 1.094-1.068-.026-1.953-.39-2.656-1.094-.703-.703-1.068-1.588-1.094-2.656h-5c-.026 1.068-.39 1.953-1.094 2.656-.703.703-1.588 1.068-2.656 1.094-1.068-.026-1.953-.39-2.656-1.094-.703-.703-1.068-1.588-1.094-2.656-.703-.026-1.29-.273-1.758-.742-.469-.469-.716-1.055-.742-1.758V936.5Zm13.75-1.25H893.5c-.365 0-.664.117-.898.352-.235.234-.352.533-.352.898v11.25c0 .365.117.664.352.898.234.235.533.352.898.352h.195a4.059 4.059 0 0 1 1.367-1.797c.625-.443 1.355-.677 2.188-.703.833.026 1.563.26 2.188.703a4.059 4.059 0 0 1 1.367 1.797H906v-12.5c0-.365-.117-.664-.352-.898-.234-.235-.533-.352-.898-.352Zm2.5 3.75v3.75h6.055l-3.047-3.516a.592.592 0 0 0-.469-.234h-2.539Zm2.5 7.5c.833.026 1.562.26 2.188.703a4.059 4.059 0 0 1 1.367 1.797h.195v-5h-6.25v3.438c.677-.6 1.51-.912 2.5-.938Zm-12.5 6.25c.703-.026 1.29-.273 1.758-.742.469-.469.716-1.055.742-1.758-.026-.703-.273-1.29-.742-1.758-.469-.469-1.055-.716-1.758-.742-.703.026-1.29.273-1.758.742-.469.469-.716 1.055-.742 1.758.026.703.273 1.29.742 1.758.469.469 1.055.716 1.758.742Zm12.5-5c-.703.026-1.29.273-1.758.742-.469.469-.716 1.055-.742 1.758.026.703.273 1.29.742 1.758.469.469 1.055.716 1.758.742.703-.026 1.29-.273 1.758-.742.469-.469.716-1.055.742-1.758-.026-.703-.273-1.29-.742-1.758-.469-.469-1.055-.716-1.758-.742Z\" fill=\"#f48ba9\" fill-rule=\"evenodd\" data-name=\"Path 1730\"/></svg>"
+        },
+        {
+          "type": "text",
+          "id": "shipping_msg",
+          "label": "Shipping message",
+          "default": "FAST FREE SHIPPING ON ORDERS $50+"
         }
       ]
     }

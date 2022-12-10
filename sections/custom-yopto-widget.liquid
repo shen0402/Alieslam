@@ -1,0 +1,24 @@
+{%- assign product = section.settings.product -%}
+{%- if product -%}
+    <div class="custom-yotpo-widget">
+        <div class="yotpo-widget-instance" data-yotpo-instance-id="297415" data-yotpo-product-id="{{product.id}}" data-yotpo-name="{{ product.title | escape }}" data-yotpo-url="{{ shop.url }}{{ product.url }}" data-yotpo-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" data-yotpo-description="{{ product.description | escape }}"></div>
+    </div>
+{%- endif -%}
+
+{% schema %}
+    {
+        "name": "Review widget",
+        "settings": [
+            {
+                "type": "product",
+                "id": "product",
+                "label": "Product"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Review widget"
+            }
+        ]
+    }
+{% endschema %}
