@@ -1083,6 +1083,10 @@ sticky-header, .header {
     font-weight: bold;
 }
 
+.product__info-wrapper .product__title span {
+    color: #f48ba9;
+}
+
 .price-item {
     font-size: 32px !important;
     font-weight: 500 !important;

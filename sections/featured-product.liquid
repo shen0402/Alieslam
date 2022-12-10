@@ -89,8 +89,10 @@
               </p>
             {%- when 'title' -%}
               <h2 class="product__title {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                {%- assign product_title = value -%}
                 {%- if product.title != blank -%}
-                  {{ product.title | escape }}
+                  {%- assign product_title = product.title -%}
+                  {{ product_title | replace: 'SELFIE', '<span>SELFIE</span>' }}
                 {%- else -%}
                   {{ 'onboarding.product_title' | t }}
                 {%- endif -%}
