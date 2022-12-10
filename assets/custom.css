@@ -1266,6 +1266,7 @@ variant-radios .product-form__input {
     cursor: pointer;
     transition: 0.3s;
     font-weight: bold;
+    margin-left: 25px;
 }
 
 .quantity__atc:hover {
@@ -1381,6 +1382,11 @@ variant-radios .product-form__input {
 
     .price .price-item {
         font-size: 28px;
+    }
+
+    .quantity__atc {
+        margin-left: 6px;
+        padding: 26px 46px;
     }
 
     .quantity__atc svg {
