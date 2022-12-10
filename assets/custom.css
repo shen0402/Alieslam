@@ -244,6 +244,10 @@ sticky-header, .header {
     .iwt-text--1 p:last-of-type {
         margin-top: 0;
     }
+
+    .section-subtitle {
+        margin-bottom: 23px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -517,7 +521,6 @@ sticky-header, .header {
 @media (max-width: 750px) {
     .iwt-list--2 {
         margin-top: 27px;
-        padding: 50px 0 36px;
         width: 100vw;
         margin-left: -30px;
     }
@@ -696,6 +699,10 @@ sticky-header, .header {
 
     .image-with-icons--text .section-text {
         margin-top: 40px;
+    }
+
+    .iwt--2 .section-text {
+        margin-top: 37px;
     }
 
     .image-with-icons--icons {
