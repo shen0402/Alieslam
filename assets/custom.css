@@ -271,6 +271,7 @@ sticky-header, .header {
 
 .accordion-with-video .accordion {
     margin-top: 50px;
+    border: none;
 }
 
 .accordion-tab--list {
