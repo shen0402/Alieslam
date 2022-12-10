@@ -143,18 +143,13 @@
                   <p class="footer__list-payment--title">
                     {{ block.settings.payment_title }}
                   </p>
-                  {%- comment -%} <ul class="list list-payment" role="list">
+                  <ul class="list list-payment" role="list">
                     {%- for type in shop.enabled_payment_types -%}
                       <li class="list-payment__item">
                         {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
                       </li>
                     {%- endfor -%}
-                  </ul> {%- endcomment -%}
-                  <div class="footer-block__payments-logo">
-                    <div class="payments-logo">
-                      <img src="{{ 'payments.png' | asset_img_url: 'master' }}">
-                    </div>
-                  </div>
+                  </ul>
                 </div>
               {%- endif -%}
             {% endif %}
@@ -256,18 +251,13 @@
                       <p class="footer__list-payment--title">
                         {{ block.settings.payment_title }}
                       </p>
-                      {%- comment -%} <ul class="list list-payment" role="list">
+                      <ul class="list list-payment" role="list">
                         {%- for type in shop.enabled_payment_types -%}
                           <li class="list-payment__item">
                             {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
                           </li>
                         {%- endfor -%}
-                      </ul> {%- endcomment -%}
-                      <div class="footer-block__payments-logo">
-                        <div class="payments-logo">
-                          <img src="{{ 'payments.png' | asset_img_url: 'master' }}">
-                        </div>
-                      </div>
+                      </ul>
                     </div>
                   {%- endif -%}
                 </div>
