@@ -1117,6 +1117,15 @@ variant-radios {
     overflow-y: auto;
 }
 
+variant-radios::-webkit-scrollbar, .announcement-bar::-webkit-scrollbar {
+    display: none;
+}
+
+variant-radios, .announcement-bar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .product__view-details, fieldset.product-form__input .form__label, .product-form__quantity .form__label, .product__info-container .product-form {
     display: none !important;
 }
