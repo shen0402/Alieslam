@@ -1284,6 +1284,7 @@ variant-radios .product-form__input {
     transition: 0.3s;
     font-weight: bold;
     margin-left: 25px;
+    text-decoration: none;
 }
 
 .quantity__atc:hover {
