@@ -99,4 +99,12 @@ function postMessageToPlayer(player, command){
       e.preventDefault();
       $('.product-form__submit').click();
     });
+
+    $('.quick_view').click(function(e){
+      e.preventDefault();
+      const handle = $(this).data('product-handle');
+      fetch(`${window.routes.root}products/${handle}?section_id=quickview&context=quick-view`)
+      .then(response => response.text())
+      .then(data => console.log(data));
+    });
 });

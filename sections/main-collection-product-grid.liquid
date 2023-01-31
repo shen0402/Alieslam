@@ -115,6 +115,7 @@
                     show_rating: section.settings.show_rating,
                     lazy_load: lazy_load,
                     show_quick_add: section.settings.enable_quick_add,
+                    show_quick_view: section.settings.enable_quick_view,
                     section_id: section.id
 
                   %}
@@ -204,6 +205,12 @@
       "id": "enable_quick_add",
       "default": false,
       "label": "t:sections.main-collection-product-grid.settings.enable_quick_buy.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_view",
+      "default": false,
+      "label": "Quick View"
     },
     {
       "type": "header",

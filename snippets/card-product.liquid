@@ -205,6 +205,11 @@
             {%- endif -%}
           </div>
         {%- endif -%}
+        {% if show_quick_view %}
+          <div class="quick-view">
+            <button class="quick_view button button--full-width button--secondary" data-product-handle="{{ card_product.handle }}" data-section-id={{ section_id }}>View</button>
+          </div>
+        {% endif %}
         <div class="card__badge {{ settings.badge_position }}">
           {%- if card_product.available == false -%}
             <span id="Badge-{{ section_id }}-{{ card_product.id }}" class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}">{{ 'products.product.sold_out' | t }}</span>
