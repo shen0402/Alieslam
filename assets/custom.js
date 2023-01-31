@@ -100,11 +100,86 @@ function postMessageToPlayer(player, command){
       $('.product-form__submit').click();
     });
 
+
+    /* Quick View Start */
+
     $('.quick_view').click(function(e){
       e.preventDefault();
       const handle = $(this).data('product-handle');
-      fetch(`${window.routes.root}products/${handle}?section_id=quickview&context=quick-view`)
+      fetch(`/products/${handle}?section_id=quickview`)
       .then(response => response.text())
-      .then(data => console.log(data));
+      .then(data => {
+        var section = new DOMParser().parseFromString(data, 'text/html').querySelector('.shopify-section');
+        $('.quick__view-modal').empty();
+        $('.quick__view-modal').append(section);
+        $('.quick__view-modal').addClass('open');
+      });
     });
+
+    $(document).on('click', '.quick__view-close', function(e){
+      e.preventDefault();
+      const quickModal = $(this).closest('.quick__view-modal');
+      quickModal.removeClass('open');
+    });
+
+    $(document).on('change', '.product__quick-view .product-form__input input', function(e){
+      e.preventDefault();
+      var variantData = JSON.parse(this.closest('variant-radios').querySelector('[type="application/json"]').textContent);
+      const fieldsets = Array.from(this.closest('variant-radios').querySelectorAll('fieldset'));
+      options = fieldsets.map((fieldset) => {
+        return Array.from(fieldset.querySelectorAll('input')).find((radio) => radio.checked).value;
+      });
+      var currentVariant = variantData.find((variant) => {
+        return !variant.options.map((option, index) => {
+          return options[index] === option;
+        }).includes(false);
+      });
+
+      $('.variant-image').addClass('hidden');
+      $(`.variant-image[data-variant-id="${currentVariant.id}"]`).removeClass('hidden');
+
+      $('.quick__view-id').val(currentVariant.id);
+
+      $('.quick_add').prop( "disabled",!currentVariant.available);
+    });
+
+    $(document).on('click', '.quick_add', function(e){
+      e.preventDefault();
+      var form = this.closest('form');
+      var cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+
+      const config = fetchConfig('javascript');
+      config.headers['X-Requested-With'] = 'XMLHttpRequest';
+      delete config.headers['Content-Type'];
+
+      const formData = new FormData(form);
+      if (cart) {
+        formData.append('sections', cart.getSectionsToRender().map((section) => section.id));
+        formData.append('sections_url', window.location.pathname);
+        cart.setActiveElement(document.activeElement);
+      }
+      config.body = formData;
+
+      fetch(`${routes.cart_add_url}`, config)
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.status) {
+            return;
+          } else if (!cart) {
+            window.location = window.routes.cart_url;
+            return;
+          }
+
+          cart.renderContents(response);
+          $('.quick__view-modal').removeClass('open');
+        })
+        .catch((e) => {
+          console.error(e);
+        })
+        .finally(() => {
+          if (cart && cart.classList.contains('is-empty')) cart.classList.remove('is-empty');
+        });
+    });
+
+    /* Quick View End */
 });

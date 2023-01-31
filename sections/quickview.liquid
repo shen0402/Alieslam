@@ -1,5 +1,76 @@
-{% if section.context == 'quick-view' %}
-  Render the quick view
-{% else %}
-  Render the complete page
+{% layout none %}
+{% if product %}
+  <span class="quick__view-close">
+    {%- render 'icon-close' -%}
+  </span>
+  <div class="product__quick-view">
+    <div class="variant-images">
+      {% for variant in product.variants %}
+        <div class="variant-image {% unless variant.id == product.selected_or_first_available_variant.id %}hidden{% endunless %}" data-variant-id={{ variant.id }}>
+          {{ variant.image | img_url: '450x' | img_tag }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="product-details">
+      <div class="product-title">
+        <h2>{{ product.title }}</h2>
+      </div>
+      <div class="product-price">
+        {%- render 'price', product: product, use_variant: true, show_badges: false, price_class: 'price--large' -%}
+      </div>
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+      <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" data-update-url="false" {{ block.shopify_attributes }}>
+        {%- for option in product.options_with_values -%}
+            <fieldset class="js product-form__input">
+              <legend class="form__label">{{ option.name }}</legend>
+              {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                      name="{{ option.name }}"
+                      value="{{ value | escape }}"
+                      form="{{ product_form_id }}"
+                      {% if option.selected_value == value %}checked{% endif %}
+                >
+                  {%- for variant in product.variants -%}
+                    {%- if variant.title == value -%}
+                      {%- assign back_image = variant.featured_image -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" data-option-name="{{ value | handleize }}">
+                  {{ value }}
+                </label>
+                <style>
+                  [for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"]::before {
+                    background-image: url({{ back_image | img_url: '150x' }});
+                  }
+                </style>
+              {%- endfor -%}
+            </fieldset>
+        {%- endfor -%}
+        <script type="application/json">
+          {{ product.variants | json }}
+        </script>
+      </variant-radios>
+      <div class="product__quick-view--form">
+        {%- assign product_form_id = 'quick-add-' | append: product.id -%}
+        {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" class="quick__view-id">
+          <button
+            id="{{ product_form_id }}-submit"
+            type="submit"
+            name="add"
+            class="button button--primary button--full-width quick_add quick-add__submit"
+            aria-haspopup="dialog"
+            aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
+            aria-live="polite"
+            data-sold-out-message="true"
+            {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+            >
+            Add to cart
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
 {% endif %}

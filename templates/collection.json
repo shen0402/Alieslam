@@ -28,7 +28,7 @@
       }
     },
     "quick-view": {
-      "type": "quick-view",
+      "type": "quickview",
       "settings": {
       }
     }
