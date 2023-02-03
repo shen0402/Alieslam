@@ -1542,3 +1542,85 @@ variant-radios .product-form__input {
         right: 5px;
     }
 }
+
+.rating {
+    border: none;
+    float: left;
+}
+  
+.rating > label {
+    color: #90A0A3;
+    float: right;
+}
+  
+.rating > label:before {
+    margin: 5px;
+    font-size: 2em;
+    font-family: "font-awesome-stars";
+    content: "\e800";
+    display: inline-block;
+}
+  
+.rating > input {
+    display: none;
+}
+  
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #F79426;
+}
+  
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label {
+    color: #FECE31;
+}
+
+.quick-review__wrapper {
+    padding: 50px 0;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+.quick-view__field {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.quick-view__field input, .quick-view__field select, .quick-view__field textarea {
+    width: 70%;
+    padding: 10px;
+}
+
+.quick-view__submit {
+    margin-top: 30px;
+}
+
+.quick-review #shopify-product-reviews {
+    display: none;
+}
+
+.quick-view__error {
+    width: 100%;
+    text-align: center;
+    color: #ff0000;
+}
+
+.quick-view__thank-you, .quick-view__form, .quick-view__error {
+    display: none;
+}
+
+.quick-view__error.active, .quick-view__thank-you.active, .quick-view__form.active {
+    display: block;
+}
+
+
+.quick-view__thank-you {
+    margin-top: 50px;
+}

@@ -1,0 +1,46 @@
+{
+    "sections": {
+      "908b9d22-8200-4898-ac3d-5f0ec61fee51": {
+        "type": "quick-review",
+        "blocks": {
+          "cc8f51f5-53af-4c8e-a47f-b6cece87fc6e": {
+            "type": "product",
+            "settings": {
+              "product": "mindflow-focus-3-0"
+            }
+          },
+          "ffd4d245-e04d-4316-9815-1e9ca9d19814": {
+            "type": "product",
+            "settings": {
+              "product": "longevity"
+            }
+          },
+          "aacd32bf-9413-4117-bd62-32f79c6565be": {
+            "type": "product",
+            "settings": {
+              "product": "mg-2-0"
+            }
+          },
+          "77a825c1-60ef-4c1d-a916-5f79823484f7": {
+            "type": "product",
+            "settings": {
+              "product": "mindflow-hangover"
+            }
+          }
+        },
+        "block_order": [
+          "cc8f51f5-53af-4c8e-a47f-b6cece87fc6e",
+          "ffd4d245-e04d-4316-9815-1e9ca9d19814",
+          "aacd32bf-9413-4117-bd62-32f79c6565be",
+          "77a825c1-60ef-4c1d-a916-5f79823484f7"
+        ],
+        "settings": {
+          "heading": "How do you like our products?",
+          "text": "<p>Talk. We are listening. And since we value feedback very much, we also reward it. Every month we draw a review, the author of which will receive a package worth CZK 3,000 from us. Thank you!<\/p>"
+        }
+      }
+    },
+    "order": [
+      "908b9d22-8200-4898-ac3d-5f0ec61fee51"
+    ]
+  }

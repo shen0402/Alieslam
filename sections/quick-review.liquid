@@ -1,0 +1,176 @@
+<div class="quick-review">
+  <div class="page-width">
+    <div class="quick-review__wrapper">
+      {% if section.settings.heading != blank %}
+        <div class="quick-review__heading">
+          <h1>{{ section.settings.heading }}</h1>
+        </div>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <div class="quick-review__text">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+      {% if section.blocks.size > 0 %}
+        <div class="quick-view__form active">
+          <div class="quick-view__field">
+            <label for="quick-view__products">Choose a product</label>
+            <select id="quick-view__products" name="quick-view__products">
+              {% for block in section.blocks %}
+                {% if block.type == 'product' %}
+                  {% assign product = block.settings.product %}
+                  <option value="{{ product.id }}">{{ product.title }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+          <div class="quick-view__field">
+            <label for="quick-view__name">Name</label>
+            <input
+              type="text"
+              id="quick-view__name"
+              name="quick-view__name"
+              class="quick-view__required-field" />
+          </div>
+          <span class="quick-view__error">
+            Required Name*
+          </span>
+          <div class="quick-view__field">
+            <label for="quick-view__email">Email</label>
+            <input
+              type="email"
+              id="quick-view__email"
+              name="quick-view__eame"
+              class="quick-view__required-field" />
+          </div>
+          <span class="quick-view__error">
+            Required Email*
+          </span>
+          <span class="quick-view__error">
+            Invalid email address*
+          </span>
+          <div class="quick-view__field">
+            <label>Rating</label>
+            <div class="rating">
+              <input
+                type="radio"
+                id="star5"
+                name="rating"
+                value="5" />
+              <label
+                class="star"
+                for="star5"
+                title="Awesome"
+                aria-hidden="true"></label>
+              <input
+                type="radio"
+                id="star4"
+                name="rating"
+                value="4" />
+              <label
+                class="star"
+                for="star4"
+                title="Great"
+                aria-hidden="true"></label>
+              <input
+                type="radio"
+                id="star3"
+                name="rating"
+                value="3" />
+              <label
+                class="star"
+                for="star3"
+                title="Very good"
+                aria-hidden="true"></label>
+              <input
+                type="radio"
+                id="star2"
+                name="rating"
+                value="2" />
+              <label
+                class="star"
+                for="star2"
+                title="Good"
+                aria-hidden="true"></label>
+              <input
+                type="radio"
+                id="star1"
+                name="rating"
+                value="1" />
+              <label
+                class="star"
+                for="star1"
+                title="Bad"
+                aria-hidden="true"></label>
+            </div>
+          </div>
+          <div class="quick-view__field">
+            <label for="quick-view__title">Review Title</label>
+            <input
+              type="text"
+              id="quick-view__title"
+              name="quick-view__reivew--title"
+              class="quick-view__required-field" />
+          </div>
+          <span class="quick-view__error">
+            Required Review Title*
+          </span>
+          <div class="quick-view__field">
+            <label for="quick-view__body">Body of Review</label>
+            <textarea
+              id="quick-view__body"
+              name="quick-view__reivew--body"
+              class="quick-view__required-field"></textarea>
+          </div>
+          <span class="quick-view__error">
+            Required Review Body*
+          </span>
+          <button class="button button--primary quick-view__submit">Send</button>
+        </div>
+
+        <div class="quick-view__thank-you">
+          <h2>Thank you so much for taking the time to leave us a rating.</h2>
+          <button id="return-quick-view-form" class="button button--primary">Return Form</button>
+        </div>
+      {% endif %}
+      <div id="shopify-product-reviews" data-id="8196130832624"></div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Quick Review",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "How do you like our products?"
+      }, {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Talk. We are listening. And since we value feedback very much, we also reward it. Every month we draw a review, the author of which will receive a package worth CZK 3,000 from us. Thank you!</p>"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "label": "Product",
+            "id": "product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Quick Review"
+      }
+    ]
+
+  }
+{% endschema %}

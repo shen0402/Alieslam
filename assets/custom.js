@@ -182,4 +182,73 @@ function postMessageToPlayer(player, command){
     });
 
     /* Quick View End */
+
+
+
+    /* Quick Review */
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+
+    $(document).on('click', '.quick-view__submit', function(){
+      var productId = $('#quick-view__products').val();
+      var name = $('#quick-view__name').val();
+      var email = $('#quick-view__email').val();
+      var rating = $('[name="rating"]:checked').val();
+      var title = $('#quick-view__title').val();
+      var body = $('#quick-view__body').val();
+
+      var validate = true;
+      $('.quick-view__required-field').each(function(){
+        if (!$(this).val()) {
+          validate = false;
+          $(this).closest('.quick-view__field').next().addClass('active');
+        } else {
+          $(this).closest('.quick-view__field').next().removeClass('active');
+        }
+
+        if ($(this).attr('type') == 'email') {
+
+          if (isEmail($(this).val())) {
+            $(this).closest('.quick-view__field').next().next().removeClass('active');
+          } else {
+            validate = false;
+            $(this).closest('.quick-view__field').next().next().addClass('active');
+          }
+          
+        }
+      });
+
+      if (validate) {
+        console.log(productId);
+        console.log(name);
+        console.log(email);
+        console.log(rating);
+        console.log(title);
+        console.log(body);
+
+        var reviewForm = $('#shopify-product-reviews');
+        reviewForm.attr('data-id', productId);
+        reviewForm.find('.spr-form').attr('id', productId);
+        reviewForm.find('form').attr('id', `new-review-form_${productId}`);
+        reviewForm.find('[name="product_id"]').val(productId);
+        reviewForm.find('[name="review[rating]"]').val(rating);
+        reviewForm.find('[name="review[author]"]').val(name);
+        reviewForm.find('[name="review[email]"]').val(email);
+        reviewForm.find('[name="review[title]"]').val(title);
+        reviewForm.find('[name="review[body]"]').val(body);
+        
+        reviewForm.find('[type="submit"]').click();
+
+        $('.quick-view__form').removeClass('active');
+        $('.quick-view__thank-you').addClass('active');
+      }
+    });
+
+    $(document).on('click', '#return-quick-view-form', function(){
+      $('.quick-view__form').addClass('active');
+      $('.quick-view__thank-you').removeClass('active');
+    });
+    /* Quick Review */
 });
