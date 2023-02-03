@@ -133,7 +133,8 @@
           <button id="return-quick-view-form" class="button button--primary">Return Form</button>
         </div>
       {% endif %}
-      <div id="shopify-product-reviews" data-id="8196130832624"></div>
+      {% assign product_block = section.blocks | where: "type", "product" | first %}
+      <div id="shopify-product-reviews" data-id="{{ product_block.settings.product.id }}"></div>
     </div>
   </div>
 </div>

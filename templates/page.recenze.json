@@ -38,9 +38,51 @@
           "heading": "How do you like our products?",
           "text": "<p>Talk. We are listening. And since we value feedback very much, we also reward it. Every month we draw a review, the author of which will receive a package worth CZK 3,000 from us. Thank you!<\/p>"
         }
+      },
+      "cac5a043-239e-445f-92f7-df443457dea3": {
+        "type": "usps",
+        "blocks": {
+          "38e9beb1-53eb-4ed5-8eb3-5481b5f55c74": {
+            "type": "item",
+            "settings": {
+              "icon": "shopify:\/\/shop_images\/badge.png",
+              "text": "Shopify Experts"
+            }
+          },
+          "4d889572-939a-4f5a-90e0-10a4e8ebef1e": {
+            "type": "item",
+            "settings": {
+              "icon": "shopify:\/\/shop_images\/fast.png",
+              "text": "Fast delivery"
+            }
+          },
+          "fc28ee8c-e0b2-45ce-9a14-65ac060b6482": {
+            "type": "item",
+            "settings": {
+              "icon": "shopify:\/\/shop_images\/card.png",
+              "text": "Secured card payment"
+            }
+          },
+          "38a42e86-9d6f-4234-bbc1-749b22023cad": {
+            "type": "item",
+            "settings": {
+              "icon": "shopify:\/\/shop_images\/10.png",
+              "text": "10+ years of experience"
+            }
+          }
+        },
+        "block_order": [
+          "38e9beb1-53eb-4ed5-8eb3-5481b5f55c74",
+          "4d889572-939a-4f5a-90e0-10a4e8ebef1e",
+          "fc28ee8c-e0b2-45ce-9a14-65ac060b6482",
+          "38a42e86-9d6f-4234-bbc1-749b22023cad"
+        ],
+        "settings": {
+        }
       }
     },
     "order": [
-      "908b9d22-8200-4898-ac3d-5f0ec61fee51"
+      "908b9d22-8200-4898-ac3d-5f0ec61fee51",
+      "cac5a043-239e-445f-92f7-df443457dea3"
     ]
   }

@@ -1,0 +1,50 @@
+<div class="usps">
+  <div class="page-width">
+    <div class="usps-wrapper">
+      {% if section.blocks.size > 0 %}
+        <div class="usps-list">
+          {% for block in section.blocks %}
+            {% assign icon = block.settings.icon %}
+            {% assign text = block.settings.text %}
+            <div class="usps-item">
+              <div class="usps-item__icon">
+                {{ icon | img_url: 'medium' | img_tag }}
+              </div>
+              <div class="usps-item__text">
+                <span>{{ text }}</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Icon with texts",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          }, {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon with texts"
+      }
+    ]
+  }
+{% endschema %}
